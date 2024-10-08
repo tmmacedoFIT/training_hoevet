@@ -3,3 +3,91 @@ title: "R Practice: Tidy Data and Joins"
 author: "Tonya Macedo"
 format: html
 ---
+
+## Set Up
+
+```{r}
+
+library(readr)
+library(dplyr)
+library(here)
+library(lubridate) # for bonus question
+
+# Quick question: Do you get a message after loading the libraries? What is it telling you? Talk to your neighbor about it or write a note in your qmd.
+
+```
+
+## Question 1 - Import data
+
+```{r}
+#| warning: false
+bird_obs <- read_csv('https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=53edaa7a0e083013d9bf20322db1780e')
+surveys <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=b2466fa5cb5ed7ee1ea91398fc291c59")
+sites <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=81bf72420e69077097fb0790dcdc63a6")
+taxalist <- read_csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-cap.256.10&entityid=58f863b7e3066e68536a9cacdc7bd58e")
+
+```
+
+## Question 2a - Explore the data
+
+You can expand the blue arrow button in the environment column to look at the data each dataframe contains
+
+The dataframe contains information about the number of observations and how many variables
+
+```{r}
+
+colnames(bird_obs)
+colnames(sites)
+colnames(surveys)
+colnames(taxalist)
+
+
+```
+
+### Question 2b - Identify Primary and Foreign keys
+
+Open the bird_obs and taxalist and dataframe to complete the table
+
+```{r}
+View(bird_obs)
+View(taxalist)
+```
+
+|          | Primary Key                      | Foreign Key |
+|----------|----------------------------------|-------------|
+| bird_obs | survey_id + site_id + species_id | species_id  |
+| taxalist | species_id                       |             |
+
+### Question 3 - Create a subset of bird_obs
+
+Create a new dataframe with onlhy species_id dof `BHCO` and `RWBL`
+
+```{r}
+birds_subset <- bird_obs %>%
+  filter(species_id %in% c("BHCO", "RWBL")) %>%
+  filter(site_id %in% c("LI-W", "NU-C"))
+
+```
+
+
+### Question 4a - Merge birds_subset with sites
+
+The additional site information can be added to the birds_subset for the BHCO and RWBL species at sites LI-W and NU-C. 
+
+```{r}
+subset_with_site <- left_join(birds_subset, sites, by = "site_id")
+
+View(subset_with_site)
+```
+
+
+Now the park information for each site is listed for the sites. 
+
+
+
+
+
+
+
+
+
