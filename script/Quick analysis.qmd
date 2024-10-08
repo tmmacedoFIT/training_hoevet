@@ -1,0 +1,89 @@
+---
+title: "Quick analysis"
+author: "Tonya Macedo"
+format: html
+editor: visual
+---
+
+# Introduction
+
+## About the data
+
+The data for this analysis were downloaded from the \[Arctic Data Center\] (https://arcticdata.io/catalog/view/doi:10.18739/A25T3FZ8X)
+
+## Set up
+
+```{r}
+library(readr)
+library(here)
+```
+
+## Read in the data
+
+```{r}
+#| message: false
+#| warning: false 
+bg_chem <- read_csv(here('data', 'BGchem2008data.csv'))
+```
+
+# Analysis
+
+## Calculate summary statistics
+
+```{r}
+
+#|eval: false #will include code but not results
+#|echo: false #will not show code in final 
+
+
+### print the column names
+colnames(bg_chem)
+
+### get the general structure
+str(bg_chem)
+
+
+### First twenty lines
+head(bg_chem, 20)
+
+### Get a summary of all of the columns
+summary(bg_chem)
+
+
+### Unique values of a column
+
+unique(bg_chem$Date)
+
+# Shift command c creates a comment via shortcut. 
+```
+
+Calculate the summary statistics for nitrate, nitrite, ammonia, and phosphate.
+
+```{r}
+nitrate <- mean(bg_chem$NO3)
+nitrite <- mean(bg_chem$NO2)
+amm <- mean(bg_chem$NH4)
+phos <- mean(bg_chem$P)
+```
+
+## Calculate the Redfield ratio
+
+Redfield ratio is the relative proportion of nitrogen to phosphorus.
+
+```{r}
+ratio <- (nitrate + nitrite + amm) / phos
+```
+
+The Redfield ratio for this dataset is \~ `r round(ratio)`.
+
+$$
+Redfield = \frac{Nitrogen}{Phosphorus}$$ \$\$
+
+## Plot Redfield ratio
+
+```{r}
+#| echo: false # just no code, will evaluate and include the code
+plot(bg_chem$P, bg_chem$NO2 + bg_chem$NO3 + bg_chem$NH4)
+```
+
+# Conclusion

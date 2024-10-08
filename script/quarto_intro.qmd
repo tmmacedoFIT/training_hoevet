@@ -1,0 +1,58 @@
+---
+title: "Intro to Quarto"
+author: "Tonya Macedo"
+format: html
+editor: visual
+execute: #this will set a default for the entire document 
+  warning: false
+  message: false
+bibliography: references.bib
+---
+
+# Level 1 header
+
+just regular text
+
+## Level 2 header
+
+-   bullet
+-   list \* indented \* list item
+
+1.  number
+2.  list
+3.  items
+
+More plain text. I can type *italics* by using a single asterisk before and after the word.
+
+I can type **bold** by using two asterisks before and after the word.
+
+I can make it ***bold and italics*** by using three asterisks before and after the word.
+
+```{r important r code}
+
+x <- 1 + 2
+
+```
+
+My important result is `r x` (this is an in-line code chunk, where x is the final result). 
+`this code is formatted`. 
+
+```{r}
+#ctl + alt + i creates a new chunk of code easily. 
+
+x <- 4 * 8
+
+height_ft <- c(5.2, 6.0, 5.7)
+
+ceoef <- 3.14
+```
+
+| Species   | Reproductive Strategy | Morphology |
+|-----------|-----------------------|------------|
+| A palmata |                       |            |
+| P lobata  |                       |            |
+|           |                       |            |
+|           |                       |            |
+|           |                       |            |
+
+Facts @oke2020
