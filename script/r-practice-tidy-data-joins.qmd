@@ -4,6 +4,8 @@ author: "Tonya Macedo"
 format: html
 ---
 
+# Exercise 1 - Practicing Joins
+
 ## Set Up
 
 ```{r}
@@ -12,8 +14,6 @@ library(readr)
 library(dplyr)
 library(here)
 library(lubridate) # for bonus question
-
-# Quick question: Do you get a message after loading the libraries? What is it telling you? Talk to your neighbor about it or write a note in your qmd.
 
 ```
 
@@ -58,7 +58,7 @@ View(taxalist)
 | bird_obs | survey_id + site_id + species_id | species_id  |
 | taxalist | species_id                       |             |
 
-### Question 3 - Create a subset of bird_obs
+## Question 3 - Create a subset of bird_obs
 
 Create a new dataframe with onlhy species_id dof `BHCO` and `RWBL`
 
@@ -70,22 +70,96 @@ birds_subset <- bird_obs %>%
 ```
 
 
-### Question 4a - Merge birds_subset with sites
+## Question 4a - Merge birds_subset with sites using left join
 
 The additional site information can be added to the birds_subset for the BHCO and RWBL species at sites LI-W and NU-C. 
 
-```{r}
-subset_with_site <- left_join(birds_subset, sites, by = "site_id")
+### Question 4b - Write the code for left join
 
-View(subset_with_site)
+```{r}
+birds_left <- left_join(birds_subset, sites, by = "site_id")
+
+View(birds_left)
 ```
 
+Now the park information for each site is listed for the sites with only the subsetted data. 
 
-Now the park information for each site is listed for the sites. 
+## Question 5a - Merge birds_subset with sites using full join
+
+This operation using a full join will join all of the columns with both birds_subset and sites.
+
+### Question 5b - Write the code for full join
 
 
+```{r}
+
+birds_full <- full_join(birds_subset, sites, by = "site_id")
+
+View(birds_full)
+
+```
+
+This birds_full dataframe is much different than birdss_left because it contains 242 observations compated to 23 observations. Each site ID now also has a row, but any information from the birds_obs columns will be NA because it does not apply. 
+
+## Question 6a - Merge birds_subset and taxalist with inner_join()
 
 
+Using this function should add common name and asu_itis columns with data based on species_id in birds_subset
+
+### Question 6b
+
+```{r}
+birds_inner <- inner_join(birds_subset, taxalist, by = "species_id")
+
+View(birds_inner)
+```
+
+### Question 6c
+
+If a left join was used instead, columns that birds_subset dataframe contains would remain in the resulting df, but if those columns aren't in taxalist, there would be NA's
+
+```{r}
+birds_inner_left <- left_join(x = birds_subset, y = taxalist, by = "species_id")
+
+View(birds_inner_left)
+```
+
+In this case, all values in species_id column are in both dataframes, so they end up being the same dataframe, with 23 observations of 11 variables. 
+
+### Quesiton 6d
+
+In a case where there was a species_id value that did not exist within the taxalist, that value would be NA and the number of observations with match the 23 observations in birds_subset. 
+
+Here, the innerjoin kept everything that matched, which was everything. 
+
+It all depends if there is something in the birds_subset species_id column that the taxalist did not have. 
+
+# Exercise 2 - Practice wrangling and joining data
+
+## Question 7a - Rename the notes column in bird_obs
+
+```{r}
+bird_obs <- bird_obs %>% 
+  rename(bird_obs_notes = notes)
+```
+
+### Question 7b - Create a subset of bird_obs with joins of taxalist, sites, surveys. but only with columns survey_date, common_name, park_name, bird_count, observer
+
+```{r}
+bird_obs_subset <- bird_obs %>% 
+  full_join(y = taxalist, by = "species_id") %>% 
+  full_join(y = sites, by = "site_id") %>% 
+  full_join(y = surveys, by = c("site_id", "survey_id")) %>%  
+  select(survey_date, common_name, park_name, bird_count, observer)
+
+View(bird_obs_subset)
+```
+
+This results in dataframe with 40,633 observations of 5 variables. 
+
+## Question 8a
+
+### Question 8b
 
 
 
