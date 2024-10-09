@@ -69,10 +69,9 @@ birds_subset <- bird_obs %>%
 
 ```
 
-
 ## Question 4a - Merge birds_subset with sites using left join
 
-The additional site information can be added to the birds_subset for the BHCO and RWBL species at sites LI-W and NU-C. 
+The additional site information can be added to the birds_subset for the BHCO and RWBL species at sites LI-W and NU-C.
 
 ### Question 4b - Write the code for left join
 
@@ -82,14 +81,13 @@ birds_left <- left_join(birds_subset, sites, by = "site_id")
 View(birds_left)
 ```
 
-Now the park information for each site is listed for the sites with only the subsetted data. 
+Now the park information for each site is listed for the sites with only the subsetted data.
 
 ## Question 5a - Merge birds_subset with sites using full join
 
 This operation using a full join will join all of the columns with both birds_subset and sites.
 
 ### Question 5b - Write the code for full join
-
 
 ```{r}
 
@@ -99,10 +97,9 @@ View(birds_full)
 
 ```
 
-This birds_full dataframe is much different than birdss_left because it contains 242 observations compated to 23 observations. Each site ID now also has a row, but any information from the birds_obs columns will be NA because it does not apply. 
+This birds_full dataframe is much different than birdss_left because it contains 242 observations compated to 23 observations. Each site ID now also has a row, but any information from the birds_obs columns will be NA because it does not apply.
 
 ## Question 6a - Merge birds_subset and taxalist with inner_join()
-
 
 Using this function should add common name and asu_itis columns with data based on species_id in birds_subset
 
@@ -124,15 +121,15 @@ birds_inner_left <- left_join(x = birds_subset, y = taxalist, by = "species_id")
 View(birds_inner_left)
 ```
 
-In this case, all values in species_id column are in both dataframes, so they end up being the same dataframe, with 23 observations of 11 variables. 
+In this case, all values in species_id column are in both dataframes, so they end up being the same dataframe, with 23 observations of 11 variables.
 
 ### Quesiton 6d
 
-In a case where there was a species_id value that did not exist within the taxalist, that value would be NA and the number of observations with match the 23 observations in birds_subset. 
+In a case where there was a species_id value that did not exist within the taxalist, that value would be NA and the number of observations with match the 23 observations in birds_subset.
 
-Here, the innerjoin kept everything that matched, which was everything. 
+Here, the innerjoin kept everything that matched, which was everything.
 
-It all depends if there is something in the birds_subset species_id column that the taxalist did not have. 
+It all depends if there is something in the birds_subset species_id column that the taxalist did not have.
 
 # Exercise 2 - Practice wrangling and joining data
 
@@ -155,13 +152,21 @@ bird_obs_subset <- bird_obs %>%
 View(bird_obs_subset)
 ```
 
-This results in dataframe with 40,633 observations of 5 variables. 
+This results in dataframe with 40,633 observations of 5 variables.
 
-## Question 8a
+## Question 8a - View how many unique observers are in the dataframe
 
-### Question 8b
+```{r}
+unique(bird_obs_subset$observer)
+```
 
+### Question 8b - Format the name for Josh Burns to be the same
 
+```{r}
+bird_obs_subset <- bird_obs_subset %>% 
+  mutate(observer = if_else(condition = observer == "Josh Burns", 
+                            true = "J. Burns", 
+                            false = observer))
 
-
-
+unique(bird_obs_subset$observer)
+```
