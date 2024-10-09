@@ -5,3 +5,15 @@ format: html
 ---
 
 This is the course material
+
+## Course Lessons
+
+-[Intro to Literate Analysis](script/Quick analysis.html)
+-[Cleaning and Wrangling Data](script/cleaning_and_wrangling.html)
+-Data Visualization
+-Functions
+
+## Practice Sessions
+- Practice 1
+- Practice 2
+- Practice 3

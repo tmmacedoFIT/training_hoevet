@@ -96,9 +96,7 @@ head(catch_long)
 ### Rename column using `rename()`
 
 ```{r}
-colnames(catch_long)
-catch_long <- catch_long %>%
-  rename(Catch = Catch_thousand)
+
 
 ```
 
