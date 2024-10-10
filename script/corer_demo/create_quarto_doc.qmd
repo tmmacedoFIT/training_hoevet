@@ -1,0 +1,140 @@
+---
+title: "CoreR Course Highlights - Creating a Quarto Document"
+author: "Tonya Macedo from NCEAS Core R Chapter 5"
+format: html
+---
+
+# Creating a Quarto Document
+
+A Quarto document is a newer version of R Markdown
+
+It allows for text and code in the same script.
+
+It is similar to Jupyter Notebook by using cell blocks for code.
+
+**Open manuscript_1_demo project**
+
+**File Dropdown -\> Quarto Document**
+
+This quarto doc will be for *data preparation* for whatever manuscript 1 is.
+
+There are 2 viewing modes, source and visual. Visual works similar to word and source works more like r.
+
+**Save Quarto Doc as data_preparation in scripts folder**
+
+Just like you may do in R, you can set up your plan for operations.
+
+Here you can use headings, then insert code
+
+# Level 1 header
+
+## Level 2 header
+
+## Level 3 header
+
+Notice the outline feature on the right panel.
+
+## Set up
+
+## Read data
+
+## Explore data
+
+## Calculate summary statistics 
+
+## Calculate the Redfield Ratio
+
+Now, you can go and run your code and write text as necessary
+
+`ctl + alt + i` inserts a new block of code
+
+## Set up
+
+```{r}
+library(readr) # I can still use comments
+library(here)
+```
+
+```{r}
+#| warning: false #this doesn't show warnings 
+#| echo: false # this will only show the evaluated code and not the actual code
+#| eval: false # this will show the code, but won't return the evaluation
+```
+
+## Read the Data
+```{r}
+#| message: false
+#| warning: false 
+bg_chem <- read_csv(here('data', 'BGchem2008data.csv'))
+
+#here will start at the project directory and then go into the folder structure we created and coral_data.csv is right where we told it
+```
+
+## Explore the data
+```{r}
+#|eval: false #will include code but not results
+#|echo: false #will not show code in final 
+
+### print the column names
+colnames(bg_chem)
+
+### get the general structure
+str(bg_chem)
+
+### First twenty lines
+head(bg_chem, 20)
+
+### Get a summary of all of the columns
+summary(bg_chem)
+
+### Unique values of a column
+unique(bg_chem$Date)
+
+# Shift command c creates a comment via shortcut. 
+```
+
+## Calculate summary statistics
+
+```{r}
+nitrate <- mean(bg_chem$NO3)
+nitrite <- mean(bg_chem$NO2)
+amm <- mean(bg_chem$NH4)
+phos <- mean(bg_chem$P)
+```
+
+## Calculate the Redfield Ratio
+
+```{r}
+ratio <- (nitrate + nitrite + amm) / phos
+```
+
+The Redfield ratio for this dataset is ~ r round(ratio).
+
+Here i can use my object to display in the rendered html. 
+
+$$
+Redfield = \frac{Nitrogen}{Phosphorus}
+$$
+Using $$, I can type \frac{Nitrogen}{Phosphorus} to create a formula visual. 
+
+```{r}
+#| echo: false #no code, will evaluate and include the code
+
+plot(bg_chem$P, bg_chem$NO2 + bg_chem$NO3 + bg_chem$NH4)
+```
+
+What does the script look like in the visual viewer?
+
+# Rendering a Quarto Document
+
+Clearing the environment and rendering after you're finished is a good check for reproducibility because it won't render if the code doesn't run from scratch. 
+
+When we created the Quarto doc, we selected html. There is also PDF and Word. 
+
+so when you render the document, it will render to whatever format it was created at. 
+
+This will generate a html from my .qmd file. 
+
+Notice a html file in your script folder now. 
+
+

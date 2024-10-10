@@ -1,0 +1,54 @@
+---
+title: "CoreR Course Highlights - Setting up for Reproducibility"
+author: "Tonya Macedo"
+format: html
+---
+
+# Setting up folder structure for reproducibility
+
+Keep your projects separate and specific
+
+**Create manuscript_1_demo project**
+
+Within the project, set up folders for:
+
+1.  **scripts**
+2.  **data**
+3.  **plots**
+
+This allows reproducibility and organization
+
+**Add *coral_data.csv* to data folder**
+
+## Use `here` instead of setwd() for reproducibility
+
+The `here` package and here function before a file directory starts from the project.
+
+Example:
+
+```{r}
+library(here)
+
+coral_data <- read.csv(here("data/coral_data.csv"))
+
+```
+
+By using here, I could send my entire R package to someone and they can run the code without needing to set up the data and working directories.
+
+The R package contains the data, scripts, and plots folder.
+
+**Example:**
+
+1. Chelsey downloads the R package and saves to desktop.
+
+2. Andy downloads the R package and saves to documents.
+
+3. Zach downloads the R package and keeps in downloads.
+
+Since all of the data is in the data folder and all of the code is saving to the plots folder, the `here` function begins at the project whereever they saved it, and no change in code is needed because it is all the same
+
+=
+
+**Reproducible**
+
+*Using this is extremly helpful for using GitHub repositories.*
