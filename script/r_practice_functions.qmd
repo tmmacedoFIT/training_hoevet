@@ -3,23 +3,96 @@ title: "R Practice Functions"
 format: html
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Question 1 - create a double it function
 
 ```{r}
-1 + 1
+
+# create function #
+double_it <- function(x) {
+    return(2 * x)
+}
+
+# try it out #
+# explicit notation
+double_it(x = 24)
+
+# non explicit notation
+double_it(24)
+
 ```
 
-You can add options to executable code like this 
+## Question 2 - create a function that exclaims an age
 
 ```{r}
-#| echo: false
-2 * 2
+# write function #
+exclaim_age <- function(age) {
+  return(paste("I am", age, "years old!"))
+}
+
+# try it out #
+# explicit notation
+exclaim_age(age = 31)
+
+# non explicit notation
+exclaim_age(31)
+```
+## Question 3 - consider function find_max
+
+```{r}
+# "find_max() function" #
+find_max <- function(value_1, value_2) {
+    
+    if (value_1 > value_2) {
+        return(value_1)
+    }
+    else if (value_2 > value_1) {
+        return(value_2)
+    }
+}
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Enter some values
+
+```{r}
+find_max(value_1 = 5, value_2 = 19)
+```
+
+```{r}
+10 * find_max(7, 4)
+```
+
+## Question 4
+
+```{r}
+find_max(4, 2, 5)
+```
+There is an unused argument, (5). which is helpful. 
+
+```{r}
+find_max(4, 4) 
+```
+
+Nothing happens which is confusing
+
+```{r}
+# `find_max()` function with error message
+find_max <- function(value_1, value_2) {
+    
+    if (value_1 == value_2) {
+        stop("Values must be different from each other.")
+    }
+    
+    if (value_1 > value_2) {
+        return(value_1)
+    }
+    else if (value_2 > value_1) {
+        return(value_2)
+    }
+}
+
+# try it out #
+# does the message appear as you expected?
+find_max(4, 4)
+```
+This new code adds an error message. 
+
