@@ -1,0 +1,186 @@
+---
+title: "Intro to Spatial Data in R"
+author: "Tonya Macedo"
+format: html
+---
+
+## Downloading data
+
+```{r}
+knb_url <- "https://dev.nceas.ucsb.edu/knb/d1/mn/v2/object/urn%3Auuid%3Aaceaecb2-1ce0-4d41-a839-d3607d32bb58"
+
+download.file(url = knb_url, destfile = '../shapefile_demo_data.zip')
+
+unzip('shapefile_demo_data.zip', exdir = '../data')
+
+file.remove('../shapefile_demo_data.zip')
+```
+
+## Set Up
+
+```{r}
+library(readr)
+library(sf)
+library(ggplot2)
+library(leaflet)
+library(scales)
+library(ggspatial)
+library(dplyr)
+library(here)
+
+```
+
+## Read Region Data
+
+```{r}
+# read in shapefile using read_sf()
+ak_regions <- read_sf(here("script/data/ak_regions_simp.shp"))
+
+plot(ak_regions)
+```
+
+```{r}
+class(ak_regions)
+```
+```{r}
+head(ak_regions)
+
+glimpse(ak_regions)
+
+st_crs(ak_regions)
+```
+
+
+```{r}
+
+ak_regions_3338 <- ak_regions %>%
+    st_transform(crs = 3338)
+
+st_crs(ak_regions_3338)
+```
+
+
+```{r}
+
+plot(ak_regions_3338)
+```
+
+## `sf` and the `tidyverse`
+
+```{r}
+# returns the names of all the columns in dataset
+colnames(ak_regions_3338)
+```
+```{r}
+ak_regions_3338 %>%
+    select(region)
+```
+
+```{r}
+unique(ak_regions_3338$region)
+```
+
+```{r}
+ak_regions_3338 %>%
+    filter(region == "Southeast")
+```
+
+## Spatilal joins
+
+```{r}
+# read in population data
+pop <- read_csv(here("script/data/alaska_population.csv"))
+```
+```{r}
+pop_4326 <- st_as_sf(pop,
+                     coords = c('lng', 'lat'),
+                     crs = 4326,
+                     remove = F)
+
+head(pop_4326)
+```
+
+
+## attempt to join
+
+```{r}
+pop_joined <- st_join(pop_4326, 
+                      ak_regions_3338, 
+                      join = st_within)
+```
+
+```{r}
+pop_3338 <- st_transform(pop_4326, 
+                         crs = 3338)
+```
+
+## now join with same crs
+```{r}
+pop_joined <- st_join(pop_3338, 
+                      ak_regions_3338, 
+                      join = st_within)
+
+head(pop_joined)
+```
+This is a spatial join, which uses the geomtry column as a key
+
+## Calculating total population by region
+
+```{r}
+pop_region <- pop_joined %>%
+    as.data.frame() %>%
+    group_by(region) %>%
+    summarise(total_pop = sum(population))
+
+head(pop_region)
+```
+
+## Joining regions with total population by regions
+
+```{r}
+pop_region_3338 <- left_join(ak_regions_3338, 
+                             pop_region, 
+                             by = "region")
+
+# plot to check
+plot(pop_region_3338["total_pop"])
+```
+
+```{r}
+pop_mgmt_3338 <- pop_region_3338 %>%
+    group_by(mgmt_area) %>%
+    summarize(total_pop = sum(total_pop))
+
+#pop_mgmt_3338 <- pop_region_3338 %>%
+   # group_by(mgmt_area) %>%
+   # summarize(total_pop = sum(total_pop), 
+   # do_union = FALSE) ## this will calculate the total population but not combine the polygons
+
+plot(pop_mgmt_3338["total_pop"])
+```
+
+
+```{r}
+pop_mgmt_3338_notcombine <- pop_region_3338 %>%
+    group_by(mgmt_area) %>%
+    summarize(total_pop = sum(total_pop), 
+              do_union = FALSE)
+
+plot(pop_mgmt_3338_notcombine["total_pop"])
+
+```
+
+### Visualize with ggplot
+
+```{r}
+ggplot(pop_region_3338) +
+    geom_sf(aes(fill = total_pop)) +
+    labs(fill = "Total Population") +
+    scale_fill_continuous(low = "khaki",
+                          high =  "firebrick",
+                          labels = comma) +
+    theme_bw()
+```
+
+
+
