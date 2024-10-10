@@ -1,0 +1,10 @@
+---
+title: "Collaboration in GitHub"
+author: "Tonya Macedo"
+format: html
+---
+
+Now you have a project with a .qmd script. 
+
+Let's pretend I want Rob to see what I did with the Redfield ratio just because. 
+
