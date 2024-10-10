@@ -6,5 +6,118 @@ format: html
 
 Now you have a project with a .qmd script. 
 
-Let's pretend I want Rob to see what I did with the Redfield ratio just because. 
+Let's pretend that I want Andy to see what I did with the Redfield ratio and want his feedback. 
+
+## Using GitHub
+
+After you download Git and set up your personal token, you'll have the Git icon in your right pane. 
+
+The last file was saved as **data_preparation.qmd**
+
+## Initialize your project on GitHub
+
+You could create a remote repository directly in GitHub and then clone to your RStudio. 
+
+However, I think most of us probably are used to starting in RStudio and then would want to upstream it to GitHub
+
+In the console:
+```{r}
+usethis::use_git()
+```
+
+Choose **yes** to allow committing uncommited files
+
+R will restart and a web browser will open your new repository in GitHub
+
+## Add a collaborator to the repository
+
+I can now add Andy as a **collaborator** on my repository
+
+**Settings -> Collaborators -> add a new collaborator**
+
+This will send an email to his email and he can now commit, pull, and push into my repository on GitHub
+
+## Cloning a github repository
+
+Now, Andy could copy the url of my repository. 
+
+In his local RStudio, 
+
+1. File -> New Project -> Version Control -> Git
+2. Past the URL
+
+Now, my manuscript_1_demo project will be open, and my folder structure and scripts are present. 
+
+Now we can both send updates. 
+
+## Commit, Pull Push
+
+Back in my RStudio, I have the data_preparation.qmd open
+
+I wanted to add a part in my script for Andy to write some stuff. 
+
+I will add:
+
+```{r}
+## Andy's comments on Redfield Ratio here
+
+
+
+```
+
+
+There are now updates to my data_preparation.qmd. 
+
+1. Click **Git** tab
+2. my quarto doc shows an update. 
+3. Selected **stage** # this is showing that there are updates that need committed
+4. Select **Commit**
+5. Select **Pull**
+    - It is best to always pull before pushing because if Andy was already in there and changing something, this will pull those updates before I push mine out.     - If there are no updates, it will tell me everything is up to date
+6. Select **Push**
+
+Now my updates are updated on GitHub
+
+If I have committed, but not pushed, it will recognize that and tell me I am one commit ahead. 
+
+If working with collaborators, it is good to pull and push often. 
+
+If you both edit the same line on the next commit, there may be a merge conflict, but it will notify you and allow you to see both what you put and what they put and decide what to do from there. 
+
+But what about my versions?
+
+## Version Control in Git Hub
+
+**Open GitHub and select commits to view all of the different versions**
+    
+    
+What if I don't want my repository to be public?
+
+
+What if it is public and I want to experiment but don't want to affect other people using it?
+
+
+How else can I share my analysis?
+
+- Web via browser. 
+
+1. Add a new Quarto file at the top level called *index*
+2. **Render** to create a html
+3. Commit your changes (for both index.qmd and index.html) with a commit message, and push to GitHub
+  If you have a folder called index_files, commit this as well. This folder contains the all the formatting and display settings for your html page.
+4. Go to your repository in GitHub
+5.Activate GitHub Pages for the main branch
+    a. Go to Settings -> Pages (underneath the Code and Automation section)
+    b. Keep the “Source” as “Deploy from a branch”
+    c. Under “Branch” you’ll see a message that says “GitHub Pages is currently disabled”. 
+    d. To     change this, change the branch from “None” to main. Keep the folder as the root and then click “Save”
+    e. You should see the message change to “Your GitHub Pages site is currently being built from the main branch”
+6. Go to https://tmmacedoFIT.github.io/manuscript_1_demo/
+
+
+## chatper 12 stuff...finish this
+
+
+
+
 
