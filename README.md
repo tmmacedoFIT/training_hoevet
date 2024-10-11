@@ -1,11 +1,16 @@
-## Brooke made a README 
+## Training repository for exercises at Core R Course October 7-11
 
-## Git Workflow 
+This project contains lessons from Core R course at NCEAS. 
 
-## Brooke added the README to github 
+Some of the topics include:
+  1. Literate Analysis
+  2. Cleaning and Wrangling Data
+  3. Joining dataframes in tidyverse
+  4. Data Visualization
+  5. Intro to Spatial Analysis
+  6. Writing functions
 
-##This is tonya typing again
+This data is available for replication for public use. 
 
-If want to add something important right here.
+The owner is Tonya Macedo and Emily and Brooke collaborated on this project. The material is from National Center for Ecological Analysis and Synthesis. 
 
-I'm resolving line 11
