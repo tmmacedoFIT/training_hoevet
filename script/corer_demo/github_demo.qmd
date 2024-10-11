@@ -84,6 +84,20 @@ If working with collaborators, it is good to pull and push often.
 
 If you both edit the same line on the next commit, there may be a merge conflict, but it will notify you and allow you to see both what you put and what they put and decide what to do from there. 
 
+
+**./gitignore**
+
+You can add a path to a script or dataset in this file and it will never be uploaded to github. 
+
+**Use cases:**
+
+1. You have a script or dataset with sensitive data
+
+2. You have a really large dataset that you don't want to use the processing to upload with every commit
+
+3. You don't want to upload that large dataset at all, and just pull it in remotely but also keep on your local computer
+
+
 But what about my versions?
 
 ## Version Control in Git Hub
@@ -101,6 +115,8 @@ How else can I share my analysis?
 
 - Web via browser. 
 
+## Publishing to the web
+
 1. Add a new Quarto file at the top level called *index*
 2. **Render** to create a html
 3. Commit your changes (for both index.qmd and index.html) with a commit message, and push to GitHub
@@ -113,10 +129,6 @@ How else can I share my analysis?
     d. To     change this, change the branch from “None” to main. Keep the folder as the root and then click “Save”
     e. You should see the message change to “Your GitHub Pages site is currently being built from the main branch”
 6. Go to https://tmmacedoFIT.github.io/manuscript_1_demo/
-
-
-## chatper 12 stuff...finish this
-
 
 
 
