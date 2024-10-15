@@ -16,7 +16,7 @@ It is similar to Jupyter Notebook by using cell blocks for code.
 
 **File Dropdown -\> Quarto Document**
 
-This quarto doc will be for *data preparation* for whatever manuscript 1 is.
+This quarto doc will be for *data_preparation* for whatever manuscript 1 is.
 
 There are 2 viewing modes, source and visual. Visual works similar to word and source works more like r.
 
